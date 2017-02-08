@@ -14,5 +14,5 @@ database:
         - sudo service postgresql restart
         - sudo -u postgres psql -c 'create database test;'
         - sudo -u postgres psql -c "create role testuser login superuser password 'testpwd'"
-        - /usr/local/madlib/Versions/1.9.1/bin/madpack -p postgres -c testuser:testpwd@localhost/test install
+        - /usr/local/madlib/Versions/1.9.1/bin/madpack -p postgres -c testuser@localhost/test install
 
