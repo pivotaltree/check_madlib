@@ -1,0 +1,17 @@
+machine:
+    pre:
+        - sudo service postgresql stop && sudo apt-get purge -y postgresql* && sudo rm -Rvf /etc/postgresql* /var/lib/postgresql
+        - sudo userdel -r postgres
+        - sudo sudo apt-get update && sudo apt-get install postgresql-9.6 postgresql-contrib-9.6 postgresql-plpython-9.6
+        - sudo service postgresql start
+database:
+    override:
+        - wget -c http://yorick.space/ftp/madlib_1.9.1-2_amd64.deb && sudo dpkg -i madlib_1.9.1-2_amd64.deb
+        - sudo sh -c "echo \"port = 5432\" >> /etc/postgresql/9.6/main/postgresql.conf"
+        - sudo sh -c "echo \"local all all trust\" >> /etc/postgresql/9.6/main/pg_hba.conf"
+        - sudo sh -c "echo \"host all all 127.0.0.1/32 trust\" >> /etc/postgresql/9.6/main/pg_hba.conf"
+        - sudo service postgresql restart
+        - sudo -u postgres psql 'create database test;'
+        - sudo -u postgres psql "create role testuser login superuser password 'testpwd'"
+        - /usr/local/madlib/Versions/1.9.1/bin/madpack -p postgres -c testuser:testpwd@localhost/test install
+
