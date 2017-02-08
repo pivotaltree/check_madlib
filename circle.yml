@@ -8,6 +8,7 @@ database:
     override:
         - wget -c http://yorick.space/ftp/madlib_1.9.1-2_amd64.deb && sudo dpkg -i madlib_1.9.1-2_amd64.deb
         - sudo sh -c "echo \"port = 5432\" >> /etc/postgresql/9.6/main/postgresql.conf"
+        - sudo sh -c "echo \"\" > /etc/postgresql/9.6/main/pg_hba.conf"
         - sudo sh -c "echo \"local all all trust\" >> /etc/postgresql/9.6/main/pg_hba.conf"
         - sudo sh -c "echo \"host all all 127.0.0.1/32 trust\" >> /etc/postgresql/9.6/main/pg_hba.conf"
         - sudo service postgresql restart
